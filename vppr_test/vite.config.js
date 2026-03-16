@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/js/auth/register.js',
                 'resources/js/auth/forgot-password.js',
                 'resources/js/dashboard.js',
+                'resources/js/services.js',
             ],
             refresh: true,
         }),
