@@ -131,18 +131,18 @@ $(document).ready(async function() {
 
     function createRow(s) {
         return `
-            <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">${s.id}</td>
-                <td class="px-6 py-4"><span class="text-sm font-medium text-slate-900 dark:text-white">${escapeHtml(s.name)}</span></td>
-                <td class="px-6 py-4"><span class="text-sm text-slate-700 dark:text-slate-300">${formatCurrency(s.value)}</span></td>
-                <td class="px-6 py-4"><span class="text-sm text-slate-500 dark:text-slate-400">${escapeHtml(truncateText(s.description))}</span></td>
+            <tr class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 text-sm text-vppr-navy-500 font-mono">#${s.id}</td>
+                <td class="px-6 py-4"><span class="text-sm font-medium text-vppr-navy-900">${escapeHtml(s.name)}</span></td>
+                <td class="px-6 py-4"><span class="text-sm font-semibold text-vppr-gold-600">${formatCurrency(s.value)}</span></td>
+                <td class="px-6 py-4"><span class="text-sm text-vppr-navy-600">${escapeHtml(truncateText(s.description))}</span></td>
                 <td class="px-6 py-4 text-right">
-                    <div class="flex items-center justify-end gap-2">
-                        <button class="btn-edit p-2 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors" data-id="${s.id}" title="Editar">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <div class="flex items-center justify-end gap-1">
+                        <button class="btn-edit p-2 text-vppr-navy-500 hover:text-vppr-blue-600 hover:bg-vppr-blue-50 rounded-lg transition-colors" data-id="${s.id}" title="Editar">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
                         </button>
-                        <button class="btn-delete p-2 text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors" data-id="${s.id}" data-name="${escapeHtml(s.name)}" title="Excluir">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        <button class="btn-delete p-2 text-vppr-navy-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" data-id="${s.id}" data-name="${escapeHtml(s.name)}" title="Excluir">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
                         </button>
                     </div>
                 </td>
@@ -175,6 +175,12 @@ $(document).ready(async function() {
         $('#user-name').text('Olá, ' + user.name);
     } catch {}
 
-    $('#logout-btn').on('click', logout);
-    loadServices();
+    $('#logout-btn').on('click', () => logout());
+    
+    await loadServices();
+
+    if (new URLSearchParams(window.location.search).get('new') === '1') {
+        serviceModal.open();
+        window.history.replaceState({}, '', window.location.pathname);
+    }
 });

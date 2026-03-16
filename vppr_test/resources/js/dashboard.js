@@ -17,5 +17,5 @@ $(document).ready(async function() {
         $('#services-count').text('0');
     }
 
-    $('#logout-btn').on('click', logout);
+    $('#logout-btn').on('click', () => logout());
 });

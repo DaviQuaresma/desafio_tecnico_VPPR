@@ -3,102 +3,143 @@
 @section('title', 'Dashboard - VPPR')
 
 @section('content')
-<div class="min-h-screen bg-slate-50 dark:bg-slate-900">
-    <nav class="bg-white dark:bg-slate-800 shadow-sm border-b border-slate-200 dark:border-slate-700">
+<div class="min-h-screen bg-gray-50">
+    <nav class="bg-vppr-navy-900 border-b border-vppr-navy-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
+                <div class="flex items-center gap-8">
+                    <x-logo class="h-8" variant="light" />
+                    
+                    <div class="hidden md:flex items-center gap-1">
+                        <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-white bg-vppr-navy-800 rounded-lg flex items-center gap-2">
+                            <x-icons.layout-dashboard class="w-4 h-4" />
+                            Dashboard
+                        </a>
+                        <a href="{{ route('services') }}" class="px-4 py-2 text-sm font-medium text-vppr-navy-500 hover:text-white hover:bg-vppr-navy-800 rounded-lg transition-colors flex items-center gap-2">
+                            <x-icons.briefcase class="w-4 h-4" />
+                            Serviços
+                        </a>
                     </div>
-                    <span class="ml-3 text-xl font-semibold text-slate-900 dark:text-white">VPPR</span>
                 </div>
+                
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('services') }}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                        Serviços
-                    </a>
-                    <span id="user-name" class="text-sm text-slate-600 dark:text-slate-400"></span>
+                    <div class="hidden sm:flex items-center gap-3 px-4 py-2 bg-vppr-navy-800 rounded-lg">
+                        <div class="w-8 h-8 rounded-full bg-vppr-gold-500/20 flex items-center justify-center">
+                            <x-icons.user class="w-4 h-4 text-vppr-gold-500" />
+                        </div>
+                        <span id="user-name" class="text-sm text-white font-medium"></span>
+                    </div>
+                    
                     <button 
                         id="logout-btn"
-                        class="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                        class="p-2 text-vppr-navy-500 hover:text-red-400 hover:bg-vppr-navy-800 rounded-lg transition-colors"
+                        title="Sair"
                     >
-                        Sair
+                        <x-icons.log-out class="w-5 h-5" />
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
-            <p class="mt-2 text-slate-600 dark:text-slate-400">Bem-vindo ao painel de controle.</p>
+            <h1 class="text-2xl font-bold text-vppr-navy-900">
+                Bem-vindo ao <span class="text-vppr-gold-600">VPPR</span>
+            </h1>
+            <p class="mt-1 text-vppr-navy-600">
+                Gerencie seus serviços e acompanhe suas atividades.
+            </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href="{{ route('services') }}" class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md transition-all duration-200">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <a href="{{ route('services') }}" class="group bg-white rounded-xl border border-gray-200 p-6 hover:border-vppr-blue-500 hover:shadow-lg transition-all">
+                <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Total de Serviços</p>
-                        <p id="services-count" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                        <p class="text-sm font-medium text-vppr-navy-600">Total de Serviços</p>
+                        <p id="services-count" class="text-3xl font-bold text-vppr-navy-900 mt-2">-</p>
                     </div>
+                    <div class="w-12 h-12 bg-vppr-blue-500/10 rounded-lg flex items-center justify-center group-hover:bg-vppr-blue-500 transition-colors">
+                        <x-icons.briefcase class="w-6 h-6 text-vppr-blue-600 group-hover:text-white transition-colors" />
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-vppr-blue-600 font-medium">
+                    <span>Ver todos</span>
+                    <x-icons.chevron-right class="w-4 h-4 ml-1" />
                 </div>
             </a>
 
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
+            <div class="bg-white rounded-xl border border-gray-200 p-6">
+                <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Status</p>
-                        <p class="text-2xl font-bold text-green-600 dark:text-green-400">Online</p>
+                        <p class="text-sm font-medium text-vppr-navy-600">Status do Sistema</p>
+                        <p class="text-3xl font-bold text-green-600 mt-2">Online</p>
                     </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <x-icons.check class="w-6 h-6 text-green-600" />
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-sm text-vppr-navy-600">API funcionando normalmente</span>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Última Atividade</p>
-                        <p class="text-2xl font-bold text-slate-900 dark:text-white">Agora</p>
-                    </div>
+            <div class="bg-gradient-to-br from-vppr-navy-900 to-vppr-navy-800 rounded-xl p-6 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-16 h-16 bg-vppr-gold-500/20"></div>
+                
+                <div class="relative">
+                    <p class="text-sm font-medium text-white/70">Ação Rápida</p>
+                    <p class="text-xl font-bold mt-2">Novo Serviço</p>
+                    <a href="{{ route('services') }}?new=1" class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-vppr-gold-500 hover:bg-vppr-gold-400 text-vppr-navy-900 font-medium rounded-lg transition-colors">
+                        <x-icons.plus class="w-4 h-4" />
+                        Criar
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="mt-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Informações da API</h2>
-            <div class="space-y-3">
-                <div class="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-700">
-                    <span class="text-sm text-slate-500 dark:text-slate-400">Endpoint Base</span>
-                    <code class="text-sm bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-slate-700 dark:text-slate-300">/api</code>
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                <h2 class="text-lg font-semibold text-vppr-navy-900">Informações da API</h2>
+            </div>
+            <div class="divide-y divide-gray-100">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-vppr-navy-100 flex items-center justify-center">
+                            <x-icons.chevron-right class="w-4 h-4 text-vppr-navy-600" />
+                        </div>
+                        <span class="text-sm text-vppr-navy-600">Endpoint Base</span>
+                    </div>
+                    <code class="px-3 py-1.5 bg-vppr-navy-900 text-vppr-gold-500 text-sm rounded-lg font-mono">/api</code>
                 </div>
-                <div class="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-700">
-                    <span class="text-sm text-slate-500 dark:text-slate-400">Autenticação</span>
-                    <span class="text-sm text-green-600 dark:text-green-400 font-medium">JWT Token</span>
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-vppr-navy-100 flex items-center justify-center">
+                            <x-icons.lock class="w-4 h-4 text-vppr-navy-600" />
+                        </div>
+                        <span class="text-sm text-vppr-navy-600">Autenticação</span>
+                    </div>
+                    <span class="px-3 py-1.5 bg-green-100 text-green-700 text-sm rounded-lg font-medium">JWT Token</span>
                 </div>
-                <div class="flex items-center justify-between py-2">
-                    <span class="text-sm text-slate-500 dark:text-slate-400">Serviços CRUD</span>
-                    <code class="text-sm bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-slate-700 dark:text-slate-300">/api/services</code>
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-vppr-navy-100 flex items-center justify-center">
+                            <x-icons.briefcase class="w-4 h-4 text-vppr-navy-600" />
+                        </div>
+                        <span class="text-sm text-vppr-navy-600">Serviços CRUD</span>
+                    </div>
+                    <code class="px-3 py-1.5 bg-vppr-navy-900 text-vppr-gold-500 text-sm rounded-lg font-mono">/api/services</code>
                 </div>
             </div>
         </div>
     </main>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <p class="text-center text-sm text-gray-400">
+            &copy; {{ date('Y') }} VPPR Consultoria Jurídica Empresarial. Todos os direitos reservados.
+        </p>
+    </footer>
 </div>
 @endsection
 
