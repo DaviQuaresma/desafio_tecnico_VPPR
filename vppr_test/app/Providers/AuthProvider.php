@@ -44,4 +44,18 @@ class AuthProvider
     {
         return JWTAuth::parseToken()->authenticate();
     }
+
+    public function resetPassword(array $data): bool
+    {
+        $user = User::where('email', $data['email'])->first();
+
+        if (!$user) {
+            return false;
+        }
+
+        $user->password = Hash::make($data['password']);
+        $user->save();
+
+        return true;
+    }
 }
