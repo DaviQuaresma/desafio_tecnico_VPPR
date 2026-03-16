@@ -1,66 +1,21 @@
-$(document).ready(function() {
-    const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
+import { getMe } from './api/auth.js';
+import { getServices } from './api/services.js';
+import { requireAuth, logout } from './helpers/auth.js';
 
-    if (!token) {
-        window.location.href = '/login';
-        return;
+$(document).ready(async function() {
+    if (requireAuth()) return;
+
+    try {
+        const user = await getMe();
+        $('#user-name').text('Olá, ' + user.name);
+    } catch {}
+
+    try {
+        const services = await getServices();
+        $('#services-count').text(services.length);
+    } catch {
+        $('#services-count').text('0');
     }
 
-    $.ajaxSetup({
-        headers: {
-            'Authorization': 'Bearer ' + token,
-            'Accept': 'application/json'
-        }
-    });
-
-    $.ajax({
-        url: '/api/auth/me',
-        method: 'GET',
-        success: function(response) {
-            if (response.user && response.user.name) {
-                $('#user-name').text('Olá, ' + response.user.name);
-            }
-        },
-        error: function(xhr) {
-            if (xhr.status === 401) {
-                localStorage.removeItem('auth_token');
-                sessionStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            }
-        }
-    });
-
-    $.ajax({
-        url: '/api/services',
-        method: 'GET',
-        success: function(response) {
-            let count = 0;
-            if (Array.isArray(response)) {
-                count = response.length;
-            } else if (response.data && Array.isArray(response.data)) {
-                count = response.data.length;
-            }
-            $('#services-count').text(count);
-        },
-        error: function() {
-            $('#services-count').text('0');
-        }
-    });
-
-    $('#logout-btn').on('click', function() {
-        $.ajax({
-            url: '/api/auth/logout',
-            method: 'POST',
-            success: function() {
-                localStorage.removeItem('auth_token');
-                sessionStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            },
-            error: function() {
-                localStorage.removeItem('auth_token');
-                sessionStorage.removeItem('auth_token');
-                window.location.href = '/login';
-            }
-        });
-    });
+    $('#logout-btn').on('click', logout);
 });
