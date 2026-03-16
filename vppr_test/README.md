@@ -1,59 +1,151 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# VPPR - Sistema de Gestão de Serviços
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema de gestão de serviços jurídicos com autenticação JWT e CRUD completo.
 
-## About Laravel
+## Tecnologias
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Tecnologia | Versão |
+|------------|--------|
+| PHP | ^8.2 |
+| Laravel | ^12.0 |
+| MySQL | 8.0+ |
+| Node.js | 18+ |
+| Tailwind CSS | ^4.0 |
+| Vite | ^7.0 |
+| JWT Auth | ^2.3 |
+| Axios | ^1.11 |
+| Toastify.js | ^1.12 |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalação
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Pré-requisitos
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- MySQL 8.0+
 
-## Learning Laravel
+### Passos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+# Clonar repositório
+git clone https://github.com/DaviQuaresma/desafio_tecnico_VPPR.git
+cd desafio_tecnico_VPPR/vppr_test
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Instalar dependências
+composer install
+npm install
 
-## Laravel Sponsors
+# Configurar ambiente
+cp .env.example .env
+php artisan key:generate
+php artisan jwt:secret
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Configurar banco de dados no .env
+# DB_DATABASE=vppr
+# DB_USERNAME=root
+# DB_PASSWORD=
 
-### Premium Partners
+# Executar migrations
+php artisan migrate
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Compilar assets
+npm run build
 
-## Contributing
+# Iniciar servidor
+php artisan serve
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Acesse: `http://localhost:8000`
 
-## Code of Conduct
+## Estrutura do Projeto
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+app/
+├── Http/Controllers/
+│   ├── AuthController.php     # Autenticação JWT
+│   └── ServiceController.php  # CRUD de serviços
+├── Models/
+│   ├── User.php
+│   └── Service.php
+resources/
+├── js/
+│   ├── api/                   # Chamadas de API (Axios)
+│   ├── helpers/               # Funções utilitárias
+│   ├── auth/                  # Scripts de autenticação
+│   ├── dashboard.js
+│   └── services.js
+├── views/
+│   ├── auth/                  # Login, Register, Forgot Password
+│   ├── components/icons/      # Ícones Lucide SVG
+│   ├── dashboard.blade.php
+│   └── services.blade.php
+```
 
-## Security Vulnerabilities
+## Rotas da API
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Autenticação
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | `/api/auth/register` | Cadastro de usuário |
+| POST | `/api/auth/login` | Login (retorna JWT) |
+| POST | `/api/auth/logout` | Logout (autenticado) |
+| POST | `/api/auth/reset-password` | Redefinir senha |
+| GET | `/api/auth/me` | Dados do usuário (autenticado) |
 
-## License
+### Serviços (requer autenticação)
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/api/services` | Listar serviços |
+| POST | `/api/services` | Criar serviço |
+| GET | `/api/services/{id}` | Buscar serviço |
+| PUT | `/api/services/{id}` | Atualizar serviço |
+| DELETE | `/api/services/{id}` | Excluir serviço |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Páginas
+
+| Rota | Descrição |
+|------|-----------|
+| `/login` | Tela de login |
+| `/register` | Cadastro de conta |
+| `/forgot-password` | Redefinição de senha |
+| `/dashboard` | Painel principal |
+| `/services` | Gestão de serviços |
+
+## Comandos Úteis
+
+```bash
+# Desenvolvimento (servidor + vite)
+composer dev
+
+# Apenas servidor
+php artisan serve
+
+# Apenas vite (hot reload)
+npm run dev
+
+# Build produção
+npm run build
+
+# Rodar testes
+php artisan test
+
+# Limpar cache
+php artisan optimize:clear
+```
+
+## Autenticação
+
+O sistema utiliza JWT (JSON Web Token) para autenticação:
+
+1. Login retorna um token JWT
+2. Token é armazenado no localStorage/sessionStorage
+3. Requisições autenticadas enviam header: `Authorization: Bearer {token}`
+4. Token expira em 60 minutos (configurável em `config/jwt.php`)
+
+## Coleção Postman
+
+Importe `postman_collection.json` no Postman para testar a API.
+
+## Licença
+
+MIT
