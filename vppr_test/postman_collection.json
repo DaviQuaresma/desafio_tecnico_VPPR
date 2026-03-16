@@ -1,6 +1,6 @@
 {
 	"info": {
-		"name": "VPPR Test - Auth API",
+		"name": "VPPR Test - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"variable": [
@@ -134,6 +134,132 @@
 							"raw": "{{base_url}}/auth/logout",
 							"host": ["{{base_url}}"],
 							"path": ["auth", "logout"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "List Services",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services",
+							"host": ["{{base_url}}"],
+							"path": ["services"]
+						}
+					}
+				},
+				{
+					"name": "Create Service",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Consultoria\",\n    \"value\": 150.00,\n    \"description\": \"Serviço de consultoria especializada\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/services",
+							"host": ["{{base_url}}"],
+							"path": ["services"]
+						}
+					}
+				},
+				{
+					"name": "Show Service",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services/1",
+							"host": ["{{base_url}}"],
+							"path": ["services", "1"]
+						}
+					}
+				},
+				{
+					"name": "Update Service",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Consultoria Premium\",\n    \"value\": 200.00,\n    \"description\": \"Serviço de consultoria premium\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/services/1",
+							"host": ["{{base_url}}"],
+							"path": ["services", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Service",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services/1",
+							"host": ["{{base_url}}"],
+							"path": ["services", "1"]
 						}
 					}
 				}
