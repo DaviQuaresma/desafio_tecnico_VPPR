@@ -62,7 +62,11 @@ class ServiceController extends Controller
             return response()->json(['error' => 'Service not found'], 404);
         }
 
-        $this->serviceProvider->delete($service);
+        $deleted = $this->serviceProvider->delete($service);
+
+        if ($deleted === false) {
+            return response()->json(['error' => 'Failed to delete service'], 500);
+        }
 
         return response()->json(['message' => 'Service deleted successfully']);
     }
