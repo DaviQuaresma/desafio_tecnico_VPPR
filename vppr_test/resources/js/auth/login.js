@@ -61,8 +61,7 @@ $(document).ready(function() {
     function checkAuth() {
         const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
         if (token) {
-            // Redirecionar para dashboard ou home
-            window.location.href = '/';
+            window.location.href = '/dashboard';
         }
     }
 
@@ -97,7 +96,7 @@ $(document).ready(function() {
                     showSuccess('Login realizado com sucesso! Redirecionando...');
                     
                     setTimeout(function() {
-                        window.location.href = '/';
+                        window.location.href = '/dashboard';
                     }, 1500);
                 } else {
                     showError('Resposta inválida do servidor.');
