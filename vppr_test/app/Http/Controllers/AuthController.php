@@ -25,14 +25,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $example;
-
         $result = $this->authProvider->register($request->only(['name', 'email', 'password']));
 
         return response()->json([
             'user' => $result['user'],
             'token' => $result['token'],
-            'example' => $example,
         ], 201);
     }
 
